@@ -1,0 +1,12 @@
+Exercise 2.2 p. 30
+
+
+Timestep1: Q1 = 0 Q2 = 0, Q3 = 0, Q4 = 0 Action: 1 Reward: -1 --> Random
+
+Timestep2: Q1 = -1 Q2 = 0, Q3 = 0, Q4 = 0 Action: 2 Reward: 1 --> Random
+
+Timestep3: Q1 = -1 Q2 = 1, Q3 = 0, Q4 = 0 Action: 2 Reward: -2 --> Policy
+
+Timestep4: Q1 = -1 Q2 = -0,5, Q3 = 0, Q4 = 0 Action: 2 Reward: 2 --> Random
+
+Timestep5: Q1 = -1 Q2 = 0,3 Q3 = 0, Q4 = 0 Action: 3 Reward: 0 --> Random
