@@ -1,7 +1,9 @@
 import gym
 import numpy as np
 import timeit
-#import matplotlib as mp
+import matplotlib as mp
+import matplotlib.pyplot as plt
+
 
 env = gym.make('FrozenLake-v0')
 env.reset()
@@ -60,25 +62,41 @@ for episode_i in range(0,num_of_episodes):
     start = timeit.default_timer()
 
     while True:
-        #delta = 0
-        #delta_max = 0
-        delta_value = np.zeros(size_of_env)
+        delta = 0
+        delta_max = 0
+        #delta_value = np.zeros(size_of_env) # computational slower as compared to the 2 variable version
 
         for s in range(0,env.observation_space.n):
             
             v_old = results_value[episode_i][s]
             v_new = bellman_update(env,pi,s, results_value[episode_i])
-            delta_value[s] = abs(v_old-v_new) #version with 
-            #delta = abs(v_old-v_new) 
-            #if delta > delta_max:
-            #    delta_max = delta
-        if np.max(delta_value) < theta:
-        #if delta_max < theta:
+            #delta_value[s] = abs(v_old-v_new) #version with longer runtime 
+            delta = abs(v_old-v_new) 
+            if delta > delta_max:
+                delta_max = delta
+        #if np.max(delta_value) < theta: 
+        if delta_max < theta:
             break
 
     end = timeit.default_timer()
     runtime[episode_i] = end-start
     
+
+result_square = np.round(np.reshape(results_value[0],(4,4)),5)
+_, ax = plt.subplots()
+plt.imshow(result_square)
+plt.title('Value Function of the given policy')
+plt.axis('off')
+plt.set_cmap('plasma')
+for i in range(4):
+    for j in range(4):
+        text = ax.text(j, i, result_square[i, j],
+                       ha="center", va="center", color="w")
+plt.colorbar()
+plt.show(block =False)
+plt.pause(10)
+plt.close()
+
 
 print("The average runtime for computation is: {}s ".format(np.average(runtime)))
 print("The shortest computation time is {}s".format(np.min(runtime)))
